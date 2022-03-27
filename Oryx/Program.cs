@@ -1,7 +1,7 @@
 ﻿using Oryx;
 
 
-var projects = new ProjectsCollection(@"S:\Source\NullableExample\NullableExample.sln");
+var projects = new CsharpProjectsCollection(@"S:\Source\NullableExample\NullableExample.sln");
 
 var summary = new NullableSummary(projects);
 

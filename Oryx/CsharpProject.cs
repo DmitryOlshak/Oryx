@@ -1,45 +1,26 @@
-﻿using System.Xml;
-
-namespace Oryx;
-
-internal sealed class CsharpFile
-{
-    public CsharpFile(string fullPath, NullableMarkScope nullableMarkScope)
-    {
-        FullPath = fullPath;
-        NullableMarkScope = nullableMarkScope;
-    }
-    
-    public string FullPath { get; }
-    public NullableMarkScope NullableMarkScope { get; }
-}
+﻿namespace Oryx;
 
 internal sealed class CsharpProject
 {
-    private CsharpProject(bool nullableEnabled, string name, IReadOnlyCollection<CsharpFile> files)
+    private CsharpProject(NullableFeature nullableFeature, string name, IReadOnlyCollection<CsharpFile> files)
     {
-        NullableEnabled = nullableEnabled;
+        NullableFeature = nullableFeature;
         Name = name;
         Files = files;
     }
     
-    public bool NullableEnabled { get; }
+    public NullableFeature NullableFeature { get; }
     public string Name { get; }
     public IReadOnlyCollection<CsharpFile> Files { get; }
 
-    public static CsharpProject Parse(string path)
+    public static CsharpProject Parse(string projectPath)
     {
-        var document = new XmlDocument();
-        document.Load(path);
-        var nullableValue = document["Project"]?["PropertyGroup"]?["Nullable"]?.InnerText;
-        var nullableEnabled = nullableValue?.Equals("enable", StringComparison.InvariantCultureIgnoreCase) ?? false;
+        var nullableFeature = NullableFeature.Parse(projectPath);
 
-        var projectName = Path.GetFileNameWithoutExtension(path);
-        
-        var files = Directory.GetFiles(Path.GetDirectoryName(path)!, "*.cs", SearchOption.AllDirectories)
-            .Select(filePath => new CsharpFile(filePath, NullableMarkScope.Parse(filePath)))
-            .ToList();
+        var projectName = Path.GetFileNameWithoutExtension(projectPath);
 
-        return new CsharpProject(nullableEnabled, projectName, files);
+        var files = CsharpFilesCollection.FromProject(projectPath);
+
+        return new CsharpProject(nullableFeature, projectName, files);
     }
 }

@@ -1,16 +1,14 @@
-﻿using System.Collections;
-
-namespace Oryx;
+﻿namespace Oryx;
 
 internal class NullableSummary
 {
     private readonly List<NullableSummaryItem> _items = new();
 
-    public NullableSummary(ProjectsCollection projects)
+    public NullableSummary(CsharpProjectsCollection csharpProjects)
     {
-        foreach (var project in projects)
+        foreach (var project in csharpProjects)
         {
-            if (project.NullableEnabled)
+            if (project.NullableFeature == NullableFeature.Enabled)
             {
                 _items.Add(NullableSummaryItem.FullSupport(project.Name));
                 continue;

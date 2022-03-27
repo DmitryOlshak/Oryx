@@ -2,9 +2,9 @@
 
 namespace Oryx;
 
-internal sealed class ProjectsCollection : List<CsharpProject>
+internal sealed class CsharpProjectsCollection : List<CsharpProject>
 {
-    public ProjectsCollection(string solutionPath)
+    public CsharpProjectsCollection(string solutionPath)
     {
         var solution = SolutionFile.Parse(solutionPath);
         var projects = solution.ProjectsInOrder
