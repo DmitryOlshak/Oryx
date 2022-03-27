@@ -2,9 +2,21 @@
 
 namespace Oryx;
 
+internal sealed class CsharpFile
+{
+    public CsharpFile(string fullPath, NullableMarkScope nullableMarkScope)
+    {
+        FullPath = fullPath;
+        NullableMarkScope = nullableMarkScope;
+    }
+    
+    public string FullPath { get; }
+    public NullableMarkScope NullableMarkScope { get; }
+}
+
 internal sealed class CsharpProject
 {
-    private CsharpProject(bool nullableEnabled, string name, IReadOnlyCollection<FileSystemInfo> files)
+    private CsharpProject(bool nullableEnabled, string name, IReadOnlyCollection<CsharpFile> files)
     {
         NullableEnabled = nullableEnabled;
         Name = name;
@@ -13,7 +25,7 @@ internal sealed class CsharpProject
     
     public bool NullableEnabled { get; }
     public string Name { get; }
-    public IReadOnlyCollection<FileSystemInfo> Files { get; }
+    public IReadOnlyCollection<CsharpFile> Files { get; }
 
     public static CsharpProject Parse(string path)
     {
@@ -25,7 +37,7 @@ internal sealed class CsharpProject
         var projectName = Path.GetFileNameWithoutExtension(path);
         
         var files = Directory.GetFiles(Path.GetDirectoryName(path)!, "*.cs", SearchOption.AllDirectories)
-            .Select(filePath => new FileInfo(filePath))
+            .Select(filePath => new CsharpFile(filePath, NullableMarkScope.Parse(filePath)))
             .ToList();
 
         return new CsharpProject(nullableEnabled, projectName, files);

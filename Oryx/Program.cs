@@ -1,35 +1,22 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using Microsoft.Build.Construction;
-using Oryx;
+﻿using Oryx;
 
 
-var projects = EnumerateProjectInSolutions(@"S:\Source\NullableExample\NullableExample.sln")
-    .Select(project => CsharpProject.Parse(project.AbsolutePath))
-    .ToList();
+var projects = new ProjectsCollection(@"S:\Source\NullableExample\NullableExample.sln");
 
-var projectNullableInfos = projects.Select(NullableAnalyzer.Analyze).ToList();
+var summary = new NullableSummary(projects);
 
-Print(projectNullableInfos);
-
+Print(summary);
 
 Console.ReadKey();
 
-IEnumerable<ProjectInSolution> EnumerateProjectInSolutions(string solutionPath)
+void Print(NullableSummary summary)
 {
-    var solution = SolutionFile.Parse(solutionPath);
-    return solution.ProjectsInOrder
-        .Where(project => Path.GetExtension(project.AbsolutePath) == ".csproj");
-}
-
-void Print(IEnumerable<ProjectNullableInfo> infos)
-{
-    foreach (var nullableInfo in infos)
+    foreach (var summaryItem in summary.Items)
     {
-        Console.WriteLine($"{nullableInfo.Progress:P}\t{nullableInfo.ProjectName}");
-        foreach (var notReadyFile in nullableInfo.NotReadyFiles)
+        Console.WriteLine($"{summaryItem.Progress}\t{summaryItem.ProjectName}");
+        foreach (var notReadyFile in summaryItem.NotReadyFiles)
         {
-            Console.WriteLine($"\t{notReadyFile.Name}");
+            Console.WriteLine($"\t{notReadyFile.FullPath}");
         }
     }
 }
