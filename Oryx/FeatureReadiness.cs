@@ -2,11 +2,11 @@
 
 namespace Oryx;
 
-internal readonly struct Progress : IFormattable
+internal readonly struct FeatureReadiness : IFormattable
 {
     private readonly double _value;
     
-    public Progress(int totalCount, int actualCount)
+    public FeatureReadiness(int totalCount, int actualCount)
     {
         if (totalCount == 0)
             throw new ArgumentException($"{nameof(totalCount)} can not be zero", nameof(totalCount));
@@ -14,12 +14,12 @@ internal readonly struct Progress : IFormattable
         _value = actualCount / (double) totalCount;
     }
 
-    private Progress(double value)
+    private FeatureReadiness(double value)
     {
         _value = value;
     }
 
-    public static Progress Done => new (1);
+    public static FeatureReadiness Done => new (1);
 
     public override bool Equals(object? obj)
     {
@@ -29,7 +29,7 @@ internal readonly struct Progress : IFormattable
         if (obj is double floating)
             return _value == floating;
         
-        return obj is Progress other && _value.Equals(other._value);
+        return obj is FeatureReadiness other && _value.Equals(other._value);
     }
 
     public override int GetHashCode()

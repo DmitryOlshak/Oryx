@@ -2,17 +2,17 @@
 
 internal sealed class NullableSummaryItem
 {
-    public NullableSummaryItem(Progress progress, string projectName, IReadOnlyCollection<CsharpFile> notReadyFiles)
+    public NullableSummaryItem(FeatureReadiness featureReadiness, string projectName, IReadOnlyCollection<CsharpFile> notReadyFiles)
     {
-        Progress = progress;
+        FeatureReadiness = featureReadiness;
         ProjectName = projectName;
         NotReadyFiles = notReadyFiles;
     }
     
-    public Progress Progress { get; }
+    public FeatureReadiness FeatureReadiness { get; }
     public string ProjectName { get; }
     public IReadOnlyCollection<CsharpFile> NotReadyFiles { get; }
     
     public static NullableSummaryItem FullSupport(string projectName) 
-        => new (Progress.Done, projectName, Array.Empty<CsharpFile>());
+        => new (FeatureReadiness.Done, projectName, Array.Empty<CsharpFile>());
 }

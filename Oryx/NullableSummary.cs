@@ -20,7 +20,7 @@ internal class NullableSummary
 
             var totalCount = notReadyFiles.Count;
             var actualCount = project.Files.Count;
-            var progress = new Progress(totalCount, actualCount);
+            var progress = new FeatureReadiness(totalCount, actualCount);
             
             _items.Add(new NullableSummaryItem(progress, project.Name, notReadyFiles));
         }

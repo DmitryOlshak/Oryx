@@ -20,7 +20,7 @@ void Print(NullableSummary summary)
 {
     foreach (var summaryItem in summary.Items)
     {
-        Console.WriteLine($"{summaryItem.Progress:P}\t{summaryItem.ProjectName}");
+        Console.WriteLine($"{summaryItem.FeatureReadiness:P}\t{summaryItem.ProjectName}");
         foreach (var notReadyFile in summaryItem.NotReadyFiles)
         {
             Console.WriteLine($"\t{notReadyFile.FullPath}");
