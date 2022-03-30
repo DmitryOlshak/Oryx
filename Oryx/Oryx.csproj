@@ -10,5 +10,8 @@
     <ItemGroup>
       <PackageReference Include="Microsoft.Build" Version="17.0.0" />
     </ItemGroup>
+    <ItemGroup>
+        <InternalsVisibleTo  Include="$(AssemblyName).UnitTests" />
+    </ItemGroup>
 
 </Project>

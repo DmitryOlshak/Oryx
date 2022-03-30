@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oryx", "Oryx\Oryx.csproj", "{63BAF9AD-3EF4-4468-8EA3-C0CE02779C2D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oryx.UnitTests", "Oryx.UnitTests\Oryx.UnitTests.csproj", "{4AA12CC6-EA6F-4A6B-9A87-71B788DADAD8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{63BAF9AD-3EF4-4468-8EA3-C0CE02779C2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63BAF9AD-3EF4-4468-8EA3-C0CE02779C2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63BAF9AD-3EF4-4468-8EA3-C0CE02779C2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AA12CC6-EA6F-4A6B-9A87-71B788DADAD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AA12CC6-EA6F-4A6B-9A87-71B788DADAD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AA12CC6-EA6F-4A6B-9A87-71B788DADAD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AA12CC6-EA6F-4A6B-9A87-71B788DADAD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
