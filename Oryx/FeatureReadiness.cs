@@ -6,12 +6,12 @@ internal readonly struct FeatureReadiness : IFormattable
 {
     private readonly double _value;
     
-    public FeatureReadiness(int totalCount, int actualCount)
+    public FeatureReadiness(int totalFilesCount, int notReadyFilesCount)
     {
-        if (totalCount == 0)
-            throw new ArgumentException($"{nameof(totalCount)} can not be zero", nameof(totalCount));
+        if (totalFilesCount == 0)
+            throw new ArgumentException($"{nameof(totalFilesCount)} can not be zero", nameof(totalFilesCount));
         
-        _value = actualCount / (double) totalCount;
+        _value = (totalFilesCount - notReadyFilesCount) / (double) totalFilesCount;
     }
 
     private FeatureReadiness(double value)
@@ -19,8 +19,18 @@ internal readonly struct FeatureReadiness : IFormattable
         _value = value;
     }
 
-    public static FeatureReadiness Done => new (1);
+    public static FeatureReadiness Full => new (1);
 
+    public static bool operator ==(FeatureReadiness left, FeatureReadiness right)
+    {
+        return left._value == right._value;
+    }
+    
+    public static bool operator !=(FeatureReadiness left, FeatureReadiness right)
+    {
+        return left._value != right._value;
+    }
+    
     public override bool Equals(object? obj)
     {
         if (obj is int integer)
@@ -35,6 +45,11 @@ internal readonly struct FeatureReadiness : IFormattable
     public override int GetHashCode()
     {
         return _value.GetHashCode();
+    }
+
+    public override string ToString()
+    {
+        return _value.ToString(CultureInfo.InvariantCulture);
     }
 
     public string ToString(string? format, IFormatProvider? formatProvider)

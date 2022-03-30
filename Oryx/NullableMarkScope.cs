@@ -1,6 +1,6 @@
 ﻿namespace Oryx;
 
-internal sealed class NullableMarkScope : IComparable<NullableMarkScope>
+internal sealed class NullableMarkScope : IEqualityComparer<NullableMarkScope>
 {
     private readonly string _value;
 
@@ -27,10 +27,19 @@ internal sealed class NullableMarkScope : IComparable<NullableMarkScope>
         return None;
     }
 
-    public int CompareTo(NullableMarkScope? other)
+    public bool Equals(NullableMarkScope? x, NullableMarkScope? y)
     {
-        if (ReferenceEquals(this, other)) return 0;
-        if (ReferenceEquals(null, other)) return 1;
-        return string.Compare(_value, other._value, StringComparison.Ordinal);
+        if (ReferenceEquals(null, x) && ReferenceEquals(null, y))
+            return true;
+        
+        if (ReferenceEquals(null, x) || ReferenceEquals(null, y))
+            return false;
+        
+        return x._value.Equals(y._value);
+    }
+
+    public int GetHashCode(NullableMarkScope obj)
+    {
+        return _value.GetHashCode();
     }
 }

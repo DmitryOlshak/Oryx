@@ -2,7 +2,7 @@
 
 internal sealed class CsharpProject
 {
-    private CsharpProject(NullableFeature nullableFeature, string name, IReadOnlyCollection<CsharpFile> files)
+    public CsharpProject(NullableFeature nullableFeature, string name, IReadOnlyCollection<CsharpFile> files)
     {
         NullableFeature = nullableFeature;
         Name = name;

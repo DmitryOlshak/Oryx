@@ -14,5 +14,5 @@ internal sealed class NullableSummaryItem
     public IReadOnlyCollection<CsharpFile> NotReadyFiles { get; }
     
     public static NullableSummaryItem FullSupport(string projectName) 
-        => new (FeatureReadiness.Done, projectName, Array.Empty<CsharpFile>());
+        => new (FeatureReadiness.Full, projectName, Array.Empty<CsharpFile>());
 }

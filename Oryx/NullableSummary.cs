@@ -4,7 +4,7 @@ internal class NullableSummary
 {
     private readonly List<NullableSummaryItem> _items = new();
 
-    public NullableSummary(CsharpProjectsCollection csharpProjects)
+    public NullableSummary(IEnumerable<CsharpProject> csharpProjects)
     {
         foreach (var project in csharpProjects)
         {
@@ -18,9 +18,7 @@ internal class NullableSummary
                 .Where(file => file.NullableMarkScope != NullableMarkScope.File)
                 .ToList();
 
-            var totalCount = notReadyFiles.Count;
-            var actualCount = project.Files.Count;
-            var progress = new FeatureReadiness(totalCount, actualCount);
+            var progress = new FeatureReadiness(project.Files.Count, notReadyFiles.Count);
             
             _items.Add(new NullableSummaryItem(progress, project.Name, notReadyFiles));
         }
