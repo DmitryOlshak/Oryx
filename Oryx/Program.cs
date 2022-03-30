@@ -1,13 +1,20 @@
-﻿using Oryx;
+﻿using CommandLine;
+using Oryx;
 
 
-var projects = new CsharpProjectsCollection(@"S:\Source\NullableExample\NullableExample.sln");
+Parser.Default.ParseArguments<ConsoleOptions>(args)
+    .WithParsed(Run);
 
-var summary = new NullableSummary(projects);
+void Run(ConsoleOptions options)
+{
+    var projects = new CsharpProjectsCollection(options.SolutionPath);
 
-Print(summary);
+    var summary = new NullableSummary(projects);
+        
+    Print(summary);
 
-Console.ReadKey();
+    Console.ReadKey();
+}
 
 void Print(NullableSummary summary)
 {
