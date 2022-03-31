@@ -18,7 +18,7 @@ void Run(ConsoleOptions options)
 
 void Print(NullableSummary summary, ConsoleOptions options)
 {
-    foreach (var summaryItem in summary.Items)
+    foreach (var summaryItem in summary.Items.OrderByDescending(item => item.FeatureReadiness))
     {
         Console.WriteLine($"{summaryItem.FeatureReadiness:P}\t{summaryItem.ProjectName}");
         

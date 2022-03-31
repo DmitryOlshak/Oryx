@@ -2,7 +2,7 @@
 
 namespace Oryx;
 
-internal readonly struct FeatureReadiness : IFormattable
+internal readonly struct FeatureReadiness : IFormattable, IComparable<FeatureReadiness>
 {
     private readonly double _value;
     
@@ -21,6 +21,9 @@ internal readonly struct FeatureReadiness : IFormattable
 
     public static FeatureReadiness Full => new (1);
 
+    public static implicit operator double(FeatureReadiness f) => f._value;
+    public static implicit operator FeatureReadiness(double d) => new (d);
+    
     public static bool operator ==(FeatureReadiness left, FeatureReadiness right)
     {
         return left._value == right._value;
@@ -55,5 +58,10 @@ internal readonly struct FeatureReadiness : IFormattable
     public string ToString(string? format, IFormatProvider? formatProvider)
     {
         return _value.ToString(format, formatProvider);
+    }
+
+    public int CompareTo(FeatureReadiness other)
+    {
+        return _value.CompareTo(other._value);
     }
 }
