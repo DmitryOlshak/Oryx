@@ -11,16 +11,20 @@ void Run(ConsoleOptions options)
 
     var summary = new NullableSummary(projects);
         
-    Print(summary);
+    Print(summary, options);
 
     Console.ReadKey();
 }
 
-void Print(NullableSummary summary)
+void Print(NullableSummary summary, ConsoleOptions options)
 {
     foreach (var summaryItem in summary.Items)
     {
         Console.WriteLine($"{summaryItem.FeatureReadiness:P}\t{summaryItem.ProjectName}");
+        
+        if (options.ShortOutput)
+            continue;
+        
         foreach (var notReadyFile in summaryItem.NotReadyFiles)
         {
             Console.WriteLine($"\t{notReadyFile.FullPath}");
