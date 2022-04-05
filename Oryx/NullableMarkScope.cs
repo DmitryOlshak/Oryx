@@ -19,8 +19,8 @@ internal sealed class NullableMarkScope : IComparable<NullableMarkScope>
 
         while (!reader.EndOfStream)
         {
-            var line = reader.ReadLine()?.Trim() ?? string.Empty;
-            if (line.Equals("#nullable enable", StringComparison.InvariantCultureIgnoreCase))
+            var line = reader.ReadLine() ?? string.Empty;
+            if (line.Contains("#nullable enable", StringComparison.InvariantCultureIgnoreCase))
                 return File;
         }
         
