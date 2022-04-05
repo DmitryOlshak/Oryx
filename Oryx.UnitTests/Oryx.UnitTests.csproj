@@ -25,4 +25,16 @@
       <ProjectReference Include="..\Oryx\Oryx.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Files\Project1.xml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Files\Project2.xml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Files\Project3.xml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

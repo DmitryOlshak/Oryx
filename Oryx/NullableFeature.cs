@@ -1,6 +1,4 @@
-﻿using System.Xml;
-
-namespace Oryx;
+﻿namespace Oryx;
 
 internal sealed class NullableFeature : IComparable<NullableFeature>
 {
@@ -16,12 +14,12 @@ internal sealed class NullableFeature : IComparable<NullableFeature>
 
     public static NullableFeature Parse(string projectPath)
     {
-        var document = new XmlDocument();
-        document.Load(projectPath);
-        var nullableValue = document["Project"]?["PropertyGroup"]?["Nullable"]?.InnerText;
-        var nullableEnabled = nullableValue?.Equals("enable", StringComparison.InvariantCultureIgnoreCase) ?? false;
+        var projectContent = File.ReadAllText(projectPath);
 
-        return nullableEnabled ? Enabled : Disabled;
+        const string featureText = "<Nullable>enable</Nullable>";
+        var featureEnabled = projectContent.Contains(featureText, StringComparison.InvariantCultureIgnoreCase);
+
+        return featureEnabled ? Enabled : Disabled;
     }
     
     public int CompareTo(NullableFeature? other)
@@ -29,5 +27,10 @@ internal sealed class NullableFeature : IComparable<NullableFeature>
         if (ReferenceEquals(this, other)) return 0;
         if (ReferenceEquals(null, other)) return 1;
         return string.Compare(_value, other._value, StringComparison.Ordinal);
+    }
+
+    public override string ToString()
+    {
+        return _value;
     }
 }
